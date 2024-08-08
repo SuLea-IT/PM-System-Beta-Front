@@ -10,6 +10,10 @@
 
 ```
 
+### Preliminary plan to adopt the technology stack
+
+ `Vue3` 、`Element-Plus` 、`axios` 、`I18n`
+
 ### Backend Deployment
 
 1. Clone the project repository
