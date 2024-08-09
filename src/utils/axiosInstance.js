@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const axiosInstance = axios.create({
-    baseURL: 'http://your-backend-url.com/api', // 在这里设置你的后端URL
+    baseURL: 'http://localhost:3000/api', // 在这里设置你的后端URL
     timeout: 5000,
     headers: {
         'Content-Type': 'application/json',
