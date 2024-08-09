@@ -37,5 +37,5 @@
 4. Run the project
 
    ```cmd
-   npm run serve
+   npm run dev
    ```

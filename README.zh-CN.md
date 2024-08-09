@@ -38,5 +38,5 @@
 4. 运行项目
 
    ```cmd
-   npm run serve
+   npm run dev
    ```
