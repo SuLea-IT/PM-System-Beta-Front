@@ -7,9 +7,9 @@
     </div>
     <div class="navbar-center">
       <ul class="navbar-menu">
-        <li><a href="#about">About</a></li>
-        <li><a href="#analyse">Analyse</a></li>
-        <li><a href="#forum">Forum</a></li>
+        <li><router-link to="/about">About</router-link></li>
+        <li><router-link to="/analyse">Analyse</router-link></li>
+        <li><router-link to="/forum">Forum</router-link></li>
       </ul>
     </div>
     <div class="navbar-right">
@@ -25,13 +25,18 @@
 
 <style scoped>
 .navbar {
+  width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
   background-color: #f5f5f5;
   padding: 10px 20px;
+  box-sizing: border-box;
   font-family: Arial, sans-serif;
+  position: relative;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+  z-index: 1000; /* 增加导航条的z-index */
 }
 
 .navbar-left {
