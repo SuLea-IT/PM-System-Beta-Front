@@ -1,6 +1,6 @@
-# PM-System-Beta
+# PM-System-Beta-Front
 
-[简体中文](https://github.com/SuLea-IT/PM-System-Beta/blob/main/README.zh-CN.md) | English
+[简体中文](https://github.com/SuLea-IT/PM-System-Beta-Front/blob/main/README.zh-CN.md) | English
 
 > This project is a front-end application based on `Node` / `Python`, primarily used for data analysis.
 

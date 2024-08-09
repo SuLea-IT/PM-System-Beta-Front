@@ -1,6 +1,6 @@
-# 项目管理系统测试版
+# 项目管理系统前端测试版
 
-简体中文 | [English](https://github.com/SuLea-IT/PM-System-Beta/blob/main/README.md)
+简体中文 | [English](https://github.com/SuLea-IT/PM-System-Beta-Front/blob/main/README.md)
 
 > 这个项目是一个基于 `Vue3` 的前端应用，主要用于部分数据分析。
 
