@@ -6,7 +6,9 @@
     align-center
     finish-status="success"
   >
-    <el-step v-for="(step, index) in steps" :key="index" :title="step.title" />
+    <el-step v-for="(step, index) in steps"
+    :key="index"
+    :title="step.title" />
   </el-steps>
   <!-- </el-card> -->
 </template>
