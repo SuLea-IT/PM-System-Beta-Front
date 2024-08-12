@@ -9,8 +9,8 @@
           @select="handleSelect"
           class="el-menu-vertical-demo"
         >
-          <el-menu-item index="Platform">Platform Data</el-menu-item>
-          <el-menu-item index="UploadData">Upload Data</el-menu-item>
+          <el-menu-item index="Platform">{{ $t("platformData") }}</el-menu-item>
+          <el-menu-item index="UploadData">{{ $t("uploadData") }}</el-menu-item>
         </el-menu>
       </el-aside>
 
@@ -25,6 +25,7 @@
 
 <script setup>
 import { ref } from "vue";
+import { useI18n } from "vue-i18n";
 import { useRouter } from "vue-router";
 import Navbar from "../components/Navbar.vue";
 

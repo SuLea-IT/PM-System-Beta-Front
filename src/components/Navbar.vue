@@ -96,7 +96,7 @@ const changeLanguage = (newLocale) => {
 }
 
 .navbar-left {
-  flex: 1;
+  /* flex: 1; */
 }
 
 .navbar-title {

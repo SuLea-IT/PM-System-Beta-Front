@@ -8,6 +8,14 @@ const messages = {
         forum: 'Forum',
         english: 'English',
         light: 'Light',
+        platformData: "Platform Data",
+        uploadData: "upload Data",
+        steps: {
+            selectData: 'Select Data',
+            configureEmail: 'Configure Email',
+            start: 'Start',
+        },
+
     },
     zh: {
         title: '空间转录组数据库 -- 李博生实验室',
@@ -16,6 +24,13 @@ const messages = {
         forum: '论坛',
         english: '英语',
         light: '浅色',
+        platformData: "平台数据",
+        uploadData: "上传数据",
+        steps: {
+            selectData: '选择数据',
+            configureEmail: '配置邮箱',
+            start: '开始',
+        },
     },
 }
 

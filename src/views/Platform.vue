@@ -1,34 +1,36 @@
 <template>
-  <!-- <el-card class="steps-card"> -->
   <el-steps
     class="custom-steps"
     :active="currentStep"
     align-center
     finish-status="success"
   >
-    <el-step v-for="(step, index) in steps"
-    :key="index"
-    :title="step.title" />
+    <el-step
+      v-for="(step, index) in steps"
+      :key="index"
+      :title="$t(`steps.${step.title}`)"
+    />
   </el-steps>
-  <!-- </el-card> -->
 </template>
+
 
 <script setup>
 import { ref } from "vue";
+import { useI18n } from "vue-i18n";
 
 const currentStep = ref(0); // 当前激活的步骤
+
 const steps = [
-  // 步骤数据
   {
-    title: "选择数据",
+    title: "selectData", // 直接使用字符串键
     description: "",
   },
   {
-    title: "配置邮箱",
+    title: "configureEmail", // 直接使用字符串键
     description: "",
   },
   {
-    title: "开始",
+    title: "start", // 直接使用字符串键
     description: "",
   },
 ];
