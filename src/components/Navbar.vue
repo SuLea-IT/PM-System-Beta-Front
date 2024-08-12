@@ -75,7 +75,6 @@ watchEffect(() => {
 // 切换语言的方法
 const changeLanguage = (newLocale) => {
   locale.value = newLocale;
-  console.log(locale.value);
   popoverVisible.value = false; // 选择完语言后关闭弹出框
 };
 </script>
