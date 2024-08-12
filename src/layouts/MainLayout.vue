@@ -29,7 +29,7 @@ import { ref } from "vue";
 import { useRouter } from "vue-router";
 import Navbar from "../components/Navbar.vue";
 
-const activeMenu = ref("feature1"); // 设置默认选中的菜单项
+const activeMenu = ref("Platform"); // 设置默认选中的菜单项
 const router = useRouter();
 
 const handleSelect = (key) => {
