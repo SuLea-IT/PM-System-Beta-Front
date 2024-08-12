@@ -11,7 +11,6 @@
         >
           <el-menu-item index="Platform">Platform Data</el-menu-item>
           <el-menu-item index="UploadData">Upload Data</el-menu-item>
-          <el-menu-item index="feature3">Feature 3</el-menu-item>
         </el-menu>
       </el-aside>
 
