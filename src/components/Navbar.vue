@@ -95,7 +95,7 @@ const changeLanguage = (newLocale) => {
 }
 
 .navbar-left {
-  /* flex: 1; */
+  width: 20%;
 }
 
 .navbar-title {
@@ -104,19 +104,16 @@ const changeLanguage = (newLocale) => {
 }
 
 .navbar-center {
-  flex: 1;
+  flex: 3;
   display: flex;
   justify-content: center;
+  width: 60%;
 }
 
 .navbar-menu {
   list-style: none;
   display: flex;
   gap: 20px;
-}
-.navbar-menu :deep(.is-active) {
-  background: #000;
-  font-size: 12px;
 }
 .navbar-menu li {
   position: relative;
@@ -130,6 +127,18 @@ const changeLanguage = (newLocale) => {
   position: relative;
 }
 
+.navbar-menu li .router-link-active::after {
+  content: "";
+  position: absolute;
+  bottom: -20px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background-color: rgb(108, 108, 235);
+  transform: scaleX(1);
+  transition: all 0.3s ease;
+  width: 100%;
+}
 
 .navbar-right {
   flex: 1;
@@ -137,6 +146,7 @@ const changeLanguage = (newLocale) => {
   justify-content: flex-end;
   align-items: center;
   gap: 10px;
+  width: 20%;
 }
 
 .language-selector {

@@ -9,8 +9,18 @@
           @select="handleSelect"
           class="el-menu-vertical-demo"
         >
-          <el-menu-item index="Platform">{{ $t("platformData") }}</el-menu-item>
-          <el-menu-item index="UploadData">{{ $t("uploadData") }}</el-menu-item>
+          <el-menu-item index="Platform" class="menu-item">
+            <div class="team">
+              <img src="../assets/team.svg" />
+              <span>{{ $t("platformData") }}</span>
+            </div></el-menu-item
+          >
+          <el-menu-item index="UploadData" class="menu-item">
+            <div class="team">
+              <img src="../assets/upload.svg" />
+              <span>{{ $t("uploadData") }}</span>
+            </div></el-menu-item
+          >
         </el-menu>
       </el-aside>
 
@@ -54,5 +64,38 @@ const handleSelect = (key) => {
 .el-main {
   padding: 20px;
   background-color: #f5f5f5;
+}
+.el-menu-vertical-demo :deep(.el-menu-item.is-active) {
+  background: #dfdfdf;
+}
+.menu-item {
+  padding-left: 0 !important;
+}
+.el-menu-vertical-demo :deep(.el-menu-item.is-active)::after {
+  content: "";
+  position: absolute;
+  bottom: 0px;
+  right: 0;
+  width: 2px;
+  background-color: #334c67;
+  transform: scaleX(1);
+  transition: all 0.3s ease;
+  height: 100%;
+}
+.team {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  justify-content: flex-end;
+}
+.team span {
+  height: 26px;
+  line-height: 24px;
+}
+.team img {
+  width: 24px;
+  height: 24px;
 }
 </style>
