@@ -19,23 +19,46 @@
         </el-steps>
       </div>
     </div>
-    <div class="platform-step-span">
-      <span class="platform-step-span-title">Step 1</span>
-      <span class="platform-step-span-text"
-        >Upload your gene expression data</span
-      >
-    </div>
   </div>
   <div class="platform-container">
     <div class="platform-left">
-      <DataSelect
-        v-model="value"
-        :options="options"
-        tagText="Data set"
-        placeholderText="Select"
-      />
+      <div class="platform-step-span">
+        <span class="platform-step-span-title">Step 1</span>
+        <span class="platform-step-span-text"
+          >Upload your gene expression data</span
+        >
+      </div>
+      <div class="platform-left-select">
+        <DataSelect
+          v-model="value"
+          :options="options"
+          tagText="Data set"
+          placeholderText="Select"
+        />
+      </div>
+      <div class="platform-left-tip">
+        <span>Data Usage & Privacy</span>
+        <span
+          >Allen Institute does not use, retain, or aggregate any data uploaded
+          to MapMyCells for its own internal purposes, nor will we publish your
+          data publicly. Allen Institute database administrators can access any
+          uploaded dataset for debugging and other error remediation purposes.
+          All files will be deleted one week after upload. Please do not submit
+          any sensitive data, personally identifiable data, or protected health
+          data that could put an individual's privacy at risk into MapMyCells.
+          See the Allen Institute Privacy Policy for more information on our
+          privacy practices.</span
+        >
+      </div>
     </div>
-    <div class="platform-right"></div>
+    <div class="platform-right">
+      <div class="platform-step-span">
+        <span class="platform-step-span-title">Step 1</span>
+        <span class="platform-step-span-text"
+          >Upload your gene expression data</span
+        >
+      </div>
+    </div>
   </div>
 </template>
 
@@ -82,6 +105,20 @@ const options = [
   display: flex;
   padding-left: 10%;
   flex-direction: column;
+  height: 100%;
+  justify-content: space-between;
+}
+.platform-left::after {
+  content: "";
+  position: absolute;
+  bottom: 10%;
+  left: 50%;
+  /* right: 0; */
+  height: 60%;
+  background-color: #cccccc;
+  transform: scaleX(1);
+  transition: all 0.3s ease;
+  width: 1px;
 }
 .platform-left :deep(.el-select__wrapper) {
   box-shadow: none;
@@ -105,9 +142,11 @@ const options = [
 }
 .platform-container {
   width: 100%;
+  height: 70%;
+  display: flex;
 }
 .platform-container > div {
-  width: 50%;
+  width: 40%;
 }
 .platform-step-title > span {
   display: flex;
@@ -118,7 +157,23 @@ const options = [
   display: flex;
   font-size: 18px;
   flex-direction: column;
-  padding-left: 8%;
+  margin-left: -4%;
   align-items: flex-start;
+  width: 60%;
+  text-align: left;
+}
+.platform-left-tip {
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  /* align-items: flex-start; */
+  text-align: left;
+  font-size: 12px;
+  width: 360px;
+  margin-left: -4%;
+}
+
+.platform-right {
+  width: 50%;
 }
 </style>
