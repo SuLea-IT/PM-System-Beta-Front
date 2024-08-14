@@ -1,50 +1,61 @@
 <template>
   <div class="platform-left-tag">
     <el-tag type="info" style="width: fit-content">{{ tagText }}</el-tag>
-    <el-select
+    <el-input
       :model-value="modelValue"
-      filterable
       :placeholder="placeholderText"
       style="width: 240px"
-      @update:model-value="updateValue"
-    >
-      <el-option
-        v-for="item in options"
-        :key="item.value"
-        :label="item.label"
-        :value="item.value"
-      />
-    </el-select>
+      @input="handleInput"
+      clearable
+    />
+    <div v-if="errorMessage" class="error-message">{{ errorMessage }}</div>
   </div>
 </template>
 
 <script setup>
-import { defineProps, defineEmits } from "vue";
+import { ref, watch } from "vue";
 
 const props = defineProps({
   tagText: {
     type: String,
     default: "Data set",
   },
+
+  modelValue: {
+    type: [String, Number],
+    default: "",
+  },
   placeholderText: {
     type: String,
     default: "Select",
   },
-  options: {
-    type: Array,
-    default: () => [],
-  },
-  modelValue: {
-    type: [String, Number],
-    default: "",
+  validateFn: {
+    type: Function,
+    default: null,
   },
 });
 
 const emit = defineEmits(["update:modelValue"]);
 
-const updateValue = (value) => {
+const errorMessage = ref("");
+
+const handleInput = (value) => {
+  if (props.validateFn) {
+    const isValid = props.validateFn(value);
+    errorMessage.value = isValid ? "" : "无效邮箱";
+  }
   emit("update:modelValue", value);
 };
+
+watch(
+  () => props.modelValue,
+  (newVal) => {
+    if (props.validateFn) {
+      const isValid = props.validateFn(newVal);
+      errorMessage.value = isValid ? "" : "无效邮箱";
+    }
+  }
+);
 </script>
 
 <style scoped>
@@ -55,7 +66,8 @@ const updateValue = (value) => {
   box-sizing: border-box;
   margin: 30px 0;
 }
-.platform-left-tag :deep(.el-select__wrapper)::after {
+
+.platform-left-tag :deep(.el-input__wrapper)::after {
   content: "";
   position: absolute;
   bottom: -6px;
@@ -65,5 +77,11 @@ const updateValue = (value) => {
   transform: scaleX(1);
   transition: all 0.3s ease;
   width: 80%;
+}
+
+.error-message {
+  color: red;
+  font-size: 12px;
+  margin-top: 5px;
 }
 </style>

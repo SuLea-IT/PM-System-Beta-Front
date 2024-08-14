@@ -35,6 +35,12 @@
           tagText="Data set"
           placeholderText="Select"
         />
+        <DataSelect
+          v-model="value"
+          :options="options"
+          tagText="Data set"
+          placeholderText="Select"
+        />
       </div>
       <div class="platform-left-tip">
         <span>Data Usage & Privacy</span>
@@ -58,6 +64,23 @@
           >Upload your gene expression data</span
         >
       </div>
+      <div class="platform-left-select">
+        <div class="platform-right-image">
+          <img src="/UMAP.png" alt="" />
+        </div>
+        <DataSelect
+          v-model="value"
+          :options="options"
+          tagText="Data set"
+          placeholderText="Select"
+        />
+        <DataInput
+          v-model="Inputvalue"
+          tagText="Enter your email address"
+          placeholderText="Select"
+          :validateFn="validateEmail"
+        />
+      </div>
     </div>
   </div>
 </template>
@@ -67,6 +90,8 @@
 import { ref } from "vue";
 import { useI18n } from "vue-i18n";
 import DataSelect from "../components/DataSelect.vue";
+import DataInput from "../components/DataInput.vue";
+import { validateEmail } from "../rule/emailValidator";
 const currentStep = ref(0); // 当前激活的步骤
 const steps = [
   {
@@ -84,6 +109,7 @@ const steps = [
 ];
 
 const value = ref("");
+const Inputvalue = ref("");
 const options = [
   {
     value: "Option1",
@@ -124,7 +150,15 @@ const options = [
   box-shadow: none;
   background: none;
 }
+.platform-right :deep(.el-select__wrapper) {
+  box-shadow: none;
+  background: none;
+}
 
+.platform-right :deep(.el-input__wrapper) {
+  box-shadow: none;
+  background: none;
+}
 .custom-steps :deep(.el-step__title) {
   font-size: 12px; /* 设置标题字体大小为12px */
 }
@@ -175,5 +209,9 @@ const options = [
 
 .platform-right {
   width: 50%;
+}
+.platform-right-image {
+  width: 240px;
+  height: 240px;
 }
 </style>

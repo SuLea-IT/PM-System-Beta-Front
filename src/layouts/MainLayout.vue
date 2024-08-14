@@ -60,10 +60,20 @@ const handleSelect = (key) => {
   height: 100%;
   border-right: none;
 }
-
+.el-menu-vertical-demo::after {
+  content: "";
+  position: absolute;
+  bottom: 0px;
+  right: 0;
+  width: 1px;
+  background-color: #cccccc;
+  transform: scaleX(1);
+  transition: all 0.3s ease;
+  height: 100%;
+}
 .el-main {
   padding: 20px;
-  background-color: #f5f5f5;
+  background-color: #ffffff;
 }
 .el-menu-vertical-demo :deep(.el-menu-item.is-active) {
   background: #dfdfdf;
