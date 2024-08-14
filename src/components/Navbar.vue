@@ -25,7 +25,21 @@
       >
         <template #reference>
           <div class="language-selector">
-            <img src="../assets/language.svg" class="language-icon" />
+            <svg
+              class="language-icon"
+              xmlns="http://www.w3.org/2000/svg"
+              xmlns:xlink="http://www.w3.org/1999/xlink"
+              aria-hidden="true"
+              viewBox="0 0 24 24"
+              width="1.2em"
+              height="1.2em"
+              data-v-63d067da=""
+            >
+              <path
+                fill="currentColor"
+                d="m18.5 10l4.4 11h-2.155l-1.201-3h-4.09l-1.199 3h-2.154L16.5 10h2zM10 2v2h6v2h-1.968a18.222 18.222 0 0 1-3.62 6.301a14.864 14.864 0 0 0 2.336 1.707l-.751 1.878A17.015 17.015 0 0 1 9 13.725a16.676 16.676 0 0 1-6.201 3.548l-.536-1.929a14.7 14.7 0 0 0 5.327-3.042A18.078 18.078 0 0 1 4.767 8h2.24A16.032 16.032 0 0 0 9 10.877a16.165 16.165 0 0 0 2.91-4.876L2 6V4h6V2h2zm7.5 10.885L16.253 16h2.492L17.5 12.885z"
+              ></path>
+            </svg>
           </div>
         </template>
         <div class="language-options">
@@ -39,7 +53,9 @@
           </div>
         </div>
       </el-popover>
-      <button class="navbar-button">{{ $t("light") }}</button>
+      <span class="navbar-button" @click="toggleDark()">
+        <Toggle></Toggle>
+      </span>
     </div>
   </nav>
 </template>
@@ -47,7 +63,11 @@
 <script setup>
 import { useI18n } from "vue-i18n";
 import { ref, watchEffect } from "vue";
+import { useDark, useToggle } from "@vueuse/core";
+import Toggle from "../components/ToggleDarkMode.vue";
 
+const isDark = useDark();
+const toggleDark = useToggle(isDark);
 // 获取当前语言和切换语言的方法
 const { locale } = useI18n();
 
@@ -85,7 +105,8 @@ const changeLanguage = (newLocale) => {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #f5f5f5;
+  background-color: var(--el-navbar-bg-color);
+  color: var(--el-navbar-color);
   padding: 10px 20px;
   box-sizing: border-box;
   font-family: Arial, sans-serif;
@@ -109,6 +130,9 @@ const changeLanguage = (newLocale) => {
   justify-content: center;
   width: 60%;
 }
+.navbar-center a {
+  color: var(--el-navbar-color);
+}
 
 .navbar-menu {
   list-style: none;
@@ -121,7 +145,6 @@ const changeLanguage = (newLocale) => {
 
 .navbar-menu li a {
   text-decoration: none;
-  color: black;
   font-weight: 500;
   padding: 10px 0;
   position: relative;
@@ -134,7 +157,7 @@ const changeLanguage = (newLocale) => {
   left: 0;
   right: 0;
   height: 2px;
-  background-color: rgb(108, 108, 235);
+  background-color: var(--el-navbar-after);
   transform: scaleX(1);
   transition: all 0.3s ease;
   width: 100%;
@@ -153,11 +176,14 @@ const changeLanguage = (newLocale) => {
   display: flex;
   align-items: center;
   cursor: pointer;
+  margin: 0 10px;
+  box-sizing: border-box;
+  margin-right: -20px;
 }
 
 .language-icon {
-  width: 24px;
-  height: 24px;
+  width: 28px;
+  height: 28px;
   margin-right: 8px;
 }
 
@@ -174,7 +200,8 @@ const changeLanguage = (newLocale) => {
 }
 
 .language-options div:hover {
-  background-color: #f0f0f0;
+  background-color: var(--el-navbar-hover-color);
+  color: var(--el-navbar-color);
 }
 
 .active-language {

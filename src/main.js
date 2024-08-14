@@ -5,8 +5,9 @@ import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 import i18n from './i18n/i18n'
-import './style.css'
-
+import './style.scss'
+import 'element-plus/theme-chalk/dark/css-vars.css'
+import './styles/dark/css-vars.scss'
 // 创建 Vue 应用实例
 const app = createApp(App)
 

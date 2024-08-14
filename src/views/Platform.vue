@@ -30,13 +30,13 @@
       </div>
       <div class="platform-left-select">
         <DataSelect
-          v-model="value"
+          v-model="selectedValues[0]"
           :options="options"
           tagText="Data set"
           placeholderText="Select"
         />
         <DataSelect
-          v-model="value"
+          v-model="selectedValues[1]"
           :options="options"
           tagText="Data set"
           placeholderText="Select"
@@ -69,7 +69,7 @@
           <img src="/UMAP.png" alt="" />
         </div>
         <DataSelect
-          v-model="value"
+          v-model="selectedValues[2]"
           :options="options"
           tagText="Data set"
           placeholderText="Select"
@@ -85,13 +85,13 @@
   </div>
 </template>
 
-
 <script setup>
-import { ref } from "vue";
+import { ref, computed, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import DataSelect from "../components/DataSelect.vue";
 import DataInput from "../components/DataInput.vue";
 import { validateEmail } from "../rule/emailValidator";
+
 const currentStep = ref(0); // 当前激活的步骤
 const steps = [
   {
@@ -108,7 +108,7 @@ const steps = [
   },
 ];
 
-const value = ref("");
+const selectedValues = ref(["", "", ""]); // 保存所有 DataSelect 的选中值
 const Inputvalue = ref("");
 const options = [
   {
@@ -120,7 +120,31 @@ const options = [
     label: "Option2",
   },
 ];
+
+const allSelected = computed(() => {
+  return selectedValues.value.every((value) => value !== "");
+});
+
+// 监视所有 DataSelect 是否都已选择
+watch(allSelected, (newValue) => {
+  if (newValue) {
+    // 如果 DataSelect 都已选择，则检查邮箱是否有效，决定是否更新 currentStep
+    if (validateEmail(Inputvalue.value)) {
+      currentStep.value = 2;
+    } else {
+      currentStep.value = 1;
+    }
+  }
+});
+
+// 监视 Inputvalue 的变化，但仅当所有 DataSelect 都已选择时才更新 currentStep
+watch(Inputvalue, (newValue) => {
+  if (allSelected.value && validateEmail(newValue)) {
+    currentStep.value = 2;
+  }
+});
 </script>
+
 
 <style scoped>
 .steps-card {
