@@ -42,4 +42,4 @@
 
 ### Demo
 
-![1](./public/demo.mp4)
+![1](https://github.com/SuLea-IT/PM-System-Beta-Front/blob/main/public/demo.mp4)
