@@ -41,5 +41,5 @@
    ```
 
 ### Demo
-
-![1](https://github.com/user-attachments/assets/b67ca8df-6243-4a21-87c8-6222c29e9d39)
+<video src="https://github.com/user-attachments/assets/b67ca8df-6243-4a21-87c8-6222c29e9d39" controls="controls" style="max-width: 100%;">
+</video>
