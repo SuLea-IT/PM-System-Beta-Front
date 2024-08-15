@@ -297,7 +297,6 @@ const toggleDarkMode = () => {
       borderColor: "#cad4d8",
       ease: "power1.inOut",
     });
-    gsap.to("#background", 1, { background: "#0d1f2b", ease: "power1.inOut" });
     isDay.value = false;
   } else {
     gsap.to("#sun", 1, { x: 55, opacity: 1, ease: "power1.inOut" });

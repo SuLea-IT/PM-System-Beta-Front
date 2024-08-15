@@ -88,8 +88,8 @@
 <script setup>
 import { ref, computed, watch } from "vue";
 import { useI18n } from "vue-i18n";
-import DataSelect from "../components/DataSelect.vue";
-import DataInput from "../components/DataInput.vue";
+import DataSelect from "../components/element/DataSelect.vue";
+import DataInput from "../components/element/DataInput.vue";
 import { validateEmail } from "../rule/emailValidator";
 
 const currentStep = ref(0); // 当前激活的步骤
