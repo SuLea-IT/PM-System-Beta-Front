@@ -9,12 +9,10 @@
     :on-change="handleChange"
   >
     <el-icon class="el-icon--upload"><upload-filled /></el-icon>
-    <div class="el-upload__text">
-      Drop file here or <em>click to upload</em>
-    </div>
+    <div class="el-upload__text" v-html="$t('dropFileText')"></div>
     <template #tip>
       <div class="el-upload__tip">
-        jpg/png files with a size less than 500kb
+        {{ $t("fileSizeTip") }}
       </div>
     </template>
   </el-upload>
@@ -24,6 +22,7 @@
 import { UploadFilled } from "@element-plus/icons-vue";
 import { defineEmits } from "vue";
 import { ElMessage } from "element-plus";
+import i18n from "../../i18n/i18n";
 import {
   validateFileType,
   allowedFileTypes,
@@ -35,15 +34,17 @@ const acceptFileTypes = allowedFileTypes.join(",");
 
 const beforeUpload = (file) => {
   const isValid = validateFileType(file);
+  console.log(isValid);
+
   if (!isValid) {
-    ElMessage.error(
-      `File type ${file.type} is not allowed. Only jpg/png files are allowed.`
-    );
+    ElMessage.error(i18n.global.t("fileUploadError", { type: file.type }));
   }
   return isValid;
 };
 
 const handleChange = (file, fileList) => {
+  const isValid = validateFileType(file);
+  console.log(isValid);
   emit("update:modelValue", fileList);
 };
 </script>

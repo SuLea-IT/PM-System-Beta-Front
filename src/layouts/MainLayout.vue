@@ -82,19 +82,32 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
-import { useI18n } from "vue-i18n";
-import { useRouter } from "vue-router";
+import { ref, onMounted } from "vue";
+import { useRouter, useRoute } from "vue-router";
 import Navbar from "../components/Navbar.vue";
 
-const activeMenu = ref("Platform"); // 设置默认选中的菜单项
+const activeMenu = ref("");
 const router = useRouter();
+const route = useRoute();
 
 const handleSelect = (key) => {
   activeMenu.value = key;
   router.push({ path: `/analyse/${key}` });
 };
+
+onMounted(() => {
+  const currentPath = route.path.split("/").pop();
+
+  // 如果访问的是 /analyse 则默认高亮 Platform
+  if (route.path === "/analyse" || !currentPath) {
+    activeMenu.value = "Platform";
+    router.push({ path: "/analyse/Platform" });
+  } else {
+    activeMenu.value = currentPath;
+  }
+});
 </script>
+
 
 <style scoped>
 .main-layout {
