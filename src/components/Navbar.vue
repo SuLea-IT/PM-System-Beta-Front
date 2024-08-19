@@ -53,8 +53,8 @@
           </div>
         </div>
       </el-popover>
-      <span class="navbar-button" @click="toggleDark()">
-        <Toggle></Toggle>
+      <span class="navbar-button" @click="toggleDarkMode()">
+        <Toggle :is-dark-mode="isDarkMode"></Toggle>
       </span>
     </div>
   </nav>
@@ -64,10 +64,16 @@
 import { useI18n } from "vue-i18n";
 import { ref, watchEffect } from "vue";
 import { useDark, useToggle } from "@vueuse/core";
-import Toggle from "../components/ToggleDarkMode.vue";
+import Toggle from "../components/ToggleDark.vue";
 
 const isDark = useDark();
 const toggleDark = useToggle(isDark);
+const isDarkMode = ref(isDark.value);
+
+const toggleDarkMode = () => {
+  toggleDark();
+  isDarkMode.value = !isDarkMode.value;
+};
 // 获取当前语言和切换语言的方法
 const { locale } = useI18n();
 

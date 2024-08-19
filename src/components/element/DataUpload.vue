@@ -20,7 +20,6 @@
 
 <script setup lang="ts">
 import { UploadFilled } from "@element-plus/icons-vue";
-import { defineEmits } from "vue";
 import { ElMessage } from "element-plus";
 import i18n from "../../i18n/i18n";
 import {

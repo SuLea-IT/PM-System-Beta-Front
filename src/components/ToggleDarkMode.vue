@@ -330,18 +330,18 @@ svg {
   transform: scale(0.7);
   z-index: 2;
   pointer-events: none;
-  width: 126px;
-  height: 48px;
+  width: 80%;
+  height: 60%;
 }
 .toggle {
-  width: 128px;
+  width: 100%;
   display: flex;
   align-items: center;
 }
 #day,
 #night {
-  width: 64px;
-  height: 32px;
+  width: 8%;
+  height: 40%;
   position: absolute;
   right: 2.5%;
   cursor: pointer;
