@@ -7,6 +7,7 @@ import GlobalLayout from '../layouts/GlobalLayout.vue'
 const routes = [
     {
         path: '/',
+        redirect: '/about',
         component: GlobalLayout,
         children: [
             {
