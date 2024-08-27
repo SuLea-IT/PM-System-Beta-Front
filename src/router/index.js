@@ -18,7 +18,6 @@ const routes = [
                 path: 'forum',
                 component: Forum
             },
-            // 其他不需要侧边栏的页面
         ]
     },
     {
