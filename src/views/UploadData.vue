@@ -29,7 +29,10 @@
         >
       </div>
       <div class="platform-left-select">
-        <DataUpload v-model="selectedValues[3]" />
+        <DataUpload
+          v-model="selectedValues[3]"
+          :selected-file-type="Number(selectedValues[2])"
+        />
       </div>
       <div class="platform-left-tip">
         <span>Data Usage & Privacy</span>
@@ -57,10 +60,18 @@
         <div class="platform-right-image">
           <img src="/UMAP.png" alt="" />
         </div>
+        <!-- First DataSelect component -->
         <DataSelect
           v-model="selectedValues[2]"
           :options="options"
           tagText="Data set"
+          placeholderText="Select"
+        />
+        <!-- New DataSelect component -->
+        <DataSelect
+          v-model="selectedValues[4]"
+          :options="funOptions"
+          tagText="Functionality"
           placeholderText="Select"
         />
         <DataInput
@@ -69,6 +80,7 @@
           placeholderText="Select"
           :validateFn="validateEmail"
         />
+        <el-button @click="handleUpload">Upload</el-button>
       </div>
     </div>
   </div>
@@ -79,60 +91,148 @@ import { ref, computed, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import DataSelect from "../components/element/DataSelect.vue";
 import DataInput from "../components/element/DataInput.vue";
-import { validateEmail } from "../rule/emailValidator";
+import { validateEmail } from "../rule/emailValidator.js";
 import DataUpload from "../components/element/DataUpload.vue";
-const currentStep = ref(0); // 当前激活的步骤
+import { uploadFiles } from "../utils/uploadUtil.js";
+import { ElMessage } from "element-plus";
+
+const currentStep = ref(1); // 当前步骤
 const steps = [
-  {
-    title: "selectData", // 直接使用字符串键
-    description: "",
-  },
-  {
-    title: "configureEmail", // 直接使用字符串键
-    description: "",
-  },
-  {
-    title: "start", // 直接使用字符串键
-    description: "",
-  },
+  { title: "selectData", description: "" },
+  { title: "uploadData", description: "" },
+  { title: "configureEmail", description: "" },
 ];
 
-const selectedValues = ref(["", "", ""]); // 保存所有 DataSelect 的选中值
+const selectedValues = ref(["", "", "1", "", "1"]);
 const Inputvalue = ref("");
+let selectedFileType = ref(Number(selectedValues.value[2]));
+let selectedFun = ref(Number(selectedValues.value[4]));
 const options = [
-  {
-    value: "Option1",
-    label: "Option1",
-  },
-  {
-    value: "Option2",
-    label: "Option2",
-  },
+  { value: "1", label: "单细胞数据聚类" },
+  { value: "2", label: "单细胞级别空间聚类" },
+  { value: "3", label: "百迈客空间转录组聚类" },
+  { value: "4", label: "Xenium数据聚类" },
+  { value: "5", label: "H5ad数据聚类" },
 ];
 
-const allSelected = computed(() => {
-  return selectedValues.value.every((value) => value !== "");
-});
+const funOptions = [
+  { value: "1", label: "Function 1" },
+  { value: "2", label: "Function 2" },
+  { value: "3", label: "Function 3" },
+];
 
-// 监视所有 DataSelect 是否都已选择
-watch(allSelected, (newValue) => {
-  if (newValue) {
-    // 如果 DataSelect 都已选择，则检查邮箱是否有效，决定是否更新 currentStep
-    if (validateEmail(Inputvalue.value)) {
-      currentStep.value = 2;
+const fileTypeRestrictions = {
+  1: {
+    allowedExtensions: [".tsv.gz", ".mtx.gz"],
+    requiredFileNames: ["barcodes", "features", "matrix"],
+    uploadFileCount: 3,
+  },
+  2: {
+    allowedExtensions: [".tsv.gz", ".mtx.gz"],
+    requiredFileNames: ["barcodes", "features", "matrix", "barcodes_pos"],
+    uploadFileCount: 4,
+  },
+  3: {
+    allowedExtensions: [".tsv.gz", ".mtx.gz"],
+    requiredFileNames: ["barcodes", "features", "matrix", "*"],
+    uploadFileCount: 4,
+  },
+  4: {
+    allowedExtensions: [".csv.gz", ".mtx.gz", ".h5"],
+    requiredFileNames: ["*", "*"],
+    uploadFileCount: 2,
+  },
+  5: {
+    allowedExtensions: [".h5ad"],
+    requiredFileNames: ["*", "*"],
+    uploadFileCount: 1,
+  },
+};
+
+const fileType = ref(1);
+const fileNumber = ref(3);
+
+watch(
+  () => selectedValues.value[2],
+  (newValue) => {
+    if (newValue) {
+      const restriction = fileTypeRestrictions[Number(newValue)];
+      if (restriction) {
+        fileType.value = Number(newValue);
+        fileNumber.value = restriction.uploadFileCount;
+        currentStep.value = 1; // 选择了 DataSet 之后，进入步骤2：上传文件
+      }
     } else {
-      currentStep.value = 1;
+      fileType.value = 1;
+      fileNumber.value = fileTypeRestrictions[1].uploadFileCount;
+      currentStep.value = 0; // 回到第一步
     }
   }
-});
+);
 
-// 监视 Inputvalue 的变化，但仅当所有 DataSelect 都已选择时才更新 currentStep
+// Watch for file upload status
+const isFileUploaded = ref(false);
+
 watch(Inputvalue, (newValue) => {
-  if (allSelected.value && validateEmail(newValue)) {
-    currentStep.value = 2;
+  if (validateEmail(newValue) && isFileUploaded.value) {
+    currentStep.value = 2; // Correct email and file uploaded, move to step 3
   }
 });
+
+const handleUpload = () => {
+  const email = Inputvalue.value;
+  const fileInput = document.querySelector('.upload-demo input[type="file"]');
+  const files = fileInput?.files;
+
+  if (files && files.length > 0) {
+    if (files.length != fileNumber.value) {
+      ElMessage.error(`请上传至少 ${fileNumber.value} 个文件。`);
+      return;
+    }
+
+    const areAllFilesValid = Array.from(files).every((file) =>
+      validateFile(file, fileType.value)
+    );
+
+    if (!areAllFilesValid) {
+      ElMessage.error("有文件类型或名称不符合要求！");
+      return;
+    }
+
+    isFileUploaded.value = true; // Mark files as uploaded
+
+    // Correctly use validateEmail function
+    if (validateEmail(email)) {
+      uploadFiles(
+        files,
+        email,
+        fileType.value,
+        fileNumber.value,
+        selectedFun.value
+      );
+    } else {
+      ElMessage.error("邮箱没有填写！");
+    }
+  } else {
+    ElMessage.error("没有文件上传！");
+  }
+};
+
+// Function to validate file type and name
+const validateFile = (file, fileType) => {
+  const restrictions = fileTypeRestrictions[fileType];
+  const fileName = file.name.toLowerCase();
+  const fileExtension = `.${fileName.substring(fileName.indexOf(".") + 1)}`;
+
+  const isValidType = restrictions.allowedExtensions.includes(fileExtension);
+  const matchesRequiredName = restrictions.requiredFileNames.some(
+    (name) => name === "*" || fileName.includes(name)
+  );
+
+  return isValidType && matchesRequiredName;
+};
 </script>
+
 
 
 <style scoped>
